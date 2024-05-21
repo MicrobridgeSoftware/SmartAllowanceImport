@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmartAllowanceImportModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ImportedTransaction">
+    <Key>
+      <PropertyRef Name="ImportedTransactionId" />
+    </Key>
+    <Property Name="ImportedTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ImportedTransactionHeaderId" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeReference" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="RegularOvertime" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="RegularDoubleTime" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="RegularTripleTime" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="MealAllowance" Type="Int32" Nullable="false" />
+    <Property Name="EveningPremium" Type="Int32" Nullable="false" />
+    <Property Name="NightPremium" Type="Int32" Nullable="false" />
+    <Property Name="SundayPremium" Type="Int32" Nullable="false" />
+    <Property Name="HolidayRegularHours" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="HolidayDoubleTimeHours" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="HolidayTripleTimeHours" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="ShiftOvertime" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="ShiftDoubleTime" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulOvertime" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulDoubleTime" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulTripleTime" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="AbsentHours" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <NavigationProperty Name="ImportedTransactionHeader" Relationship="Self.FK_ImportedTransaction_ImportedTransactionHeader" FromRole="ImportedTransaction" ToRole="ImportedTransactionHeader" />
+    <NavigationProperty Name="ImportedTransactionAllowances" Relationship="SmartAllowanceImportModel.FK_ImportedTransactionAllowance_ImportedTransaction" FromRole="ImportedTransaction" ToRole="ImportedTransactionAllowance" />
+    <NavigationProperty Name="ExportedTransactionDetails" Relationship="SmartAllowanceImportModel.FK_ExportedTransactionDetails_ImportedTransaction" FromRole="ImportedTransaction" ToRole="ExportedTransactionDetail" />
+    <Property Name="Notes" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ImportedTransactionHeader">
+    <Key>
+      <PropertyRef Name="ImportedTransactionHeaderId" />
+    </Key>
+    <Property Name="ImportedTransactionHeaderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ImportedFilePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateImported" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RecordCount" Type="Int32" Nullable="false" />
+    <Property Name="IsExported" Type="Boolean" Nullable="false" />
+    <Property Name="NewFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ImportedTransactions" Relationship="Self.FK_ImportedTransaction_ImportedTransactionHeader" FromRole="ImportedTransactionHeader" ToRole="ImportedTransaction" />
+  </EntityType>
+  <Association Name="FK_ImportedTransaction_ImportedTransactionHeader">
+    <End Role="ImportedTransactionHeader" Type="Self.ImportedTransactionHeader" Multiplicity="1" />
+    <End Role="ImportedTransaction" Type="Self.ImportedTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImportedTransactionHeader">
+        <PropertyRef Name="ImportedTransactionHeaderId" />
+      </Principal>
+      <Dependent Role="ImportedTransaction">
+        <PropertyRef Name="ImportedTransactionHeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmartAllowanceImportEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ImportedTransactions" EntityType="Self.ImportedTransaction" />
+    <EntitySet Name="ImportedTransactionHeaders" EntityType="Self.ImportedTransactionHeader" />
+    <AssociationSet Name="FK_ImportedTransaction_ImportedTransactionHeader" Association="Self.FK_ImportedTransaction_ImportedTransactionHeader">
+      <End Role="ImportedTransactionHeader" EntitySet="ImportedTransactionHeaders" />
+      <End Role="ImportedTransaction" EntitySet="ImportedTransactions" />
+    </AssociationSet>
+    <EntitySet Name="AllowanceConfigurations" EntityType="SmartAllowanceImportModel.AllowanceConfiguration" />
+    <EntitySet Name="ImportedTransactionAllowances" EntityType="SmartAllowanceImportModel.ImportedTransactionAllowance" />
+    <AssociationSet Name="FK_ImportedTransactionAllowance_AllowanceConfiguration" Association="SmartAllowanceImportModel.FK_ImportedTransactionAllowance_AllowanceConfiguration">
+      <End Role="AllowanceConfiguration" EntitySet="AllowanceConfigurations" />
+      <End Role="ImportedTransactionAllowance" EntitySet="ImportedTransactionAllowances" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportedTransactionAllowance_ImportedTransaction" Association="SmartAllowanceImportModel.FK_ImportedTransactionAllowance_ImportedTransaction">
+      <End Role="ImportedTransaction" EntitySet="ImportedTransactions" />
+      <End Role="ImportedTransactionAllowance" EntitySet="ImportedTransactionAllowances" />
+    </AssociationSet>
+    <EntitySet Name="PayrollCodeViews" EntityType="SmartAllowanceImportModel.PayrollCodeView" />
+    <EntitySet Name="ExportedTransactionDetails" EntityType="SmartAllowanceImportModel.ExportedTransactionDetail" />
+    <EntitySet Name="ExportedTransactions" EntityType="SmartAllowanceImportModel.ExportedTransaction" />
+    <AssociationSet Name="FK_ExportedTransactionDetails_ExportedTransactions" Association="SmartAllowanceImportModel.FK_ExportedTransactionDetails_ExportedTransactions">
+      <End Role="ExportedTransaction" EntitySet="ExportedTransactions" />
+      <End Role="ExportedTransactionDetail" EntitySet="ExportedTransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportedTransactionDetails_ImportedTransaction" Association="SmartAllowanceImportModel.FK_ExportedTransactionDetails_ImportedTransaction">
+      <End Role="ImportedTransaction" EntitySet="ImportedTransactions" />
+      <End Role="ExportedTransactionDetail" EntitySet="ExportedTransactionDetails" />
+    </AssociationSet>
+    <EntitySet Name="ImportedTransactionsViews" EntityType="SmartAllowanceImportModel.ImportedTransactionsView" />
+    <EntitySet Name="AutoCompleteDataSourceViews" EntityType="SmartAllowanceImportModel.AutoCompleteDataSourceView" />
+    <EntitySet Name="AllowancesForExportViews" EntityType="SmartAllowanceImportModel.AllowancesForExportView" />
+    <EntitySet Name="ExportedTransactionsViews" EntityType="SmartAllowanceImportModel.ExportedTransactionsView" />
+  </EntityContainer>
+  <EntityType Name="AllowanceConfiguration">
+    <Key>
+      <PropertyRef Name="AllowanceConfigId" />
+    </Key>
+    <Property Name="AllowanceConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AllowanceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ObjectReference" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PayrollCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="RateFactor" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="IsRateMultiplier" Type="Boolean" Nullable="false" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ImportedTransactionAllowances" Relationship="SmartAllowanceImportModel.FK_ImportedTransactionAllowance_AllowanceConfiguration" FromRole="AllowanceConfiguration" ToRole="ImportedTransactionAllowance" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ImportedTransactionAllowance">
+    <Key>
+      <PropertyRef Name="ImportedTransactionAllowanceId" />
+    </Key>
+    <Property Name="ImportedTransactionAllowanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ImportedTransactionId" Type="Int32" Nullable="false" />
+    <Property Name="AllowanceConfigId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <NavigationProperty Name="AllowanceConfiguration" Relationship="SmartAllowanceImportModel.FK_ImportedTransactionAllowance_AllowanceConfiguration" FromRole="ImportedTransactionAllowance" ToRole="AllowanceConfiguration" />
+    <NavigationProperty Name="ImportedTransaction" Relationship="SmartAllowanceImportModel.FK_ImportedTransactionAllowance_ImportedTransaction" FromRole="ImportedTransactionAllowance" ToRole="ImportedTransaction" />
+  </EntityType>
+  <Association Name="FK_ImportedTransactionAllowance_AllowanceConfiguration">
+    <End Type="SmartAllowanceImportModel.AllowanceConfiguration" Role="AllowanceConfiguration" Multiplicity="1" />
+    <End Type="SmartAllowanceImportModel.ImportedTransactionAllowance" Role="ImportedTransactionAllowance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AllowanceConfiguration">
+        <PropertyRef Name="AllowanceConfigId" />
+      </Principal>
+      <Dependent Role="ImportedTransactionAllowance">
+        <PropertyRef Name="AllowanceConfigId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportedTransactionAllowance_ImportedTransaction">
+    <End Type="SmartAllowanceImportModel.ImportedTransaction" Role="ImportedTransaction" Multiplicity="1" />
+    <End Type="SmartAllowanceImportModel.ImportedTransactionAllowance" Role="ImportedTransactionAllowance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImportedTransaction">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Principal>
+      <Dependent Role="ImportedTransactionAllowance">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PayrollCodeView">
+    <Key>
+      <PropertyRef Name="PayrollCodeId" />
+      <PropertyRef Name="CompanyId" />
+      <PropertyRef Name="CategoryId" />
+      <PropertyRef Name="Code" />
+      <PropertyRef Name="Description" />
+      <PropertyRef Name="ShortDescription" />
+      <PropertyRef Name="PrivateToCompany" />
+      <PropertyRef Name="DeductNisBeforeCalculatingPen" />
+      <PropertyRef Name="GovernmentApproved" />
+      <PropertyRef Name="OvertimeCode" />
+      <PropertyRef Name="EmployeeGL" />
+      <PropertyRef Name="UseFormattingConventionForEmployeeGL" />
+      <PropertyRef Name="EmployerGL" />
+      <PropertyRef Name="UseFormattingConventionForEmployerGL" />
+      <PropertyRef Name="VolGL" />
+      <PropertyRef Name="UseFormattingConventionForVolGL" />
+      <PropertyRef Name="EmployeeDefault" />
+      <PropertyRef Name="EmployerDefault" />
+      <PropertyRef Name="VoluntaryDefault" />
+      <PropertyRef Name="SystemCode" />
+      <PropertyRef Name="Active" />
+      <PropertyRef Name="VisualSmartCode" />
+      <PropertyRef Name="BeneficiaryId" />
+      <PropertyRef Name="Priority" />
+      <PropertyRef Name="DisallowVoluntaryDeduction" />
+      <PropertyRef Name="Reference" />
+      <PropertyRef Name="RetroCode" />
+      <PropertyRef Name="ArrearsCode" />
+    </Key>
+    <Property Name="PayrollCodeId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int16" Nullable="false" />
+    <Property Name="CategoryId" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="PrivateToCompany" Type="Boolean" Nullable="false" />
+    <Property Name="DeductNisBeforeCalculatingPen" Type="Boolean" Nullable="false" />
+    <Property Name="GovernmentApproved" Type="Boolean" Nullable="false" />
+    <Property Name="OvertimeCode" Type="Boolean" Nullable="false" />
+    <Property Name="EmployeeGL" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="UseFormattingConventionForEmployeeGL" Type="Boolean" Nullable="false" />
+    <Property Name="EmployerGL" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="UseFormattingConventionForEmployerGL" Type="Boolean" Nullable="false" />
+    <Property Name="VolGL" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="UseFormattingConventionForVolGL" Type="Boolean" Nullable="false" />
+    <Property Name="EmployeeDefault" Type="Single" Nullable="false" />
+    <Property Name="EmployerDefault" Type="Single" Nullable="false" />
+    <Property Name="VoluntaryDefault" Type="Single" Nullable="false" />
+    <Property Name="SystemCode" Type="Boolean" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="VisualSmartCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="BeneficiaryId" Type="Int16" Nullable="false" />
+    <Property Name="Priority" Type="Byte" Nullable="false" />
+    <Property Name="DisallowVoluntaryDeduction" Type="Boolean" Nullable="false" />
+    <Property Name="Reference" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="RetroCode" Type="Boolean" Nullable="false" />
+    <Property Name="ArrearsCode" Type="Boolean" Nullable="false" />
+    <Property Name="PayrollCode" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ExportedTransactionDetail">
+    <Key>
+      <PropertyRef Name="ExportedTransactionDetailId" />
+    </Key>
+    <Property Name="ExportedTransactionDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExportedTransactionId" Type="Int32" Nullable="false" />
+    <Property Name="ImportedTransactionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ExportedTransaction" Relationship="SmartAllowanceImportModel.FK_ExportedTransactionDetails_ExportedTransactions" FromRole="ExportedTransactionDetail" ToRole="ExportedTransaction" />
+    <NavigationProperty Name="ImportedTransaction" Relationship="SmartAllowanceImportModel.FK_ExportedTransactionDetails_ImportedTransaction" FromRole="ExportedTransactionDetail" ToRole="ImportedTransaction" />
+    <Property Name="AllowanceConfigId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="PayrollCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="ExportedQuantity" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="ExportedTransaction">
+    <Key>
+      <PropertyRef Name="ExportedTransactionId" />
+    </Key>
+    <Property Name="ExportedTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="ExportedPath" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeCount" Type="Int32" Nullable="false" />
+    <Property Name="DateExported" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ExportedTransactionDetails" Relationship="SmartAllowanceImportModel.FK_ExportedTransactionDetails_ExportedTransactions" FromRole="ExportedTransaction" ToRole="ExportedTransactionDetail" />
+  </EntityType>
+  <Association Name="FK_ExportedTransactionDetails_ExportedTransactions">
+    <End Type="SmartAllowanceImportModel.ExportedTransaction" Role="ExportedTransaction" Multiplicity="1" />
+    <End Type="SmartAllowanceImportModel.ExportedTransactionDetail" Role="ExportedTransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExportedTransaction">
+        <PropertyRef Name="ExportedTransactionId" />
+      </Principal>
+      <Dependent Role="ExportedTransactionDetail">
+        <PropertyRef Name="ExportedTransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExportedTransactionDetails_ImportedTransaction">
+    <End Type="SmartAllowanceImportModel.ImportedTransaction" Role="ImportedTransaction" Multiplicity="1" />
+    <End Type="SmartAllowanceImportModel.ExportedTransactionDetail" Role="ExportedTransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImportedTransaction">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Principal>
+      <Dependent Role="ExportedTransactionDetail">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ImportedTransactionsView">
+    <Key>
+      <PropertyRef Name="ImportedTransactionHeaderId" />
+      <PropertyRef Name="ImportedFilePath" />
+      <PropertyRef Name="DateImported" />
+      <PropertyRef Name="RecordCount" />
+      <PropertyRef Name="IsExported" />
+      <PropertyRef Name="NewFileName" />
+      <PropertyRef Name="ImportedTransactionId" />
+      <PropertyRef Name="EmployeeReference" />
+      <PropertyRef Name="RegularOvertime" />
+      <PropertyRef Name="RegularDoubleTime" />
+      <PropertyRef Name="RegularTripleTime" />
+      <PropertyRef Name="MealAllowance" />
+      <PropertyRef Name="EveningPremium" />
+      <PropertyRef Name="NightPremium" />
+      <PropertyRef Name="SundayPremium" />
+      <PropertyRef Name="HolidayRegularHours" />
+      <PropertyRef Name="HolidayDoubleTimeHours" />
+      <PropertyRef Name="HolidayTripleTimeHours" />
+      <PropertyRef Name="ShiftOvertime" />
+      <PropertyRef Name="ShiftDoubleTime" />
+      <PropertyRef Name="OverhaulOvertime" />
+      <PropertyRef Name="OverhaulDoubleTime" />
+      <PropertyRef Name="OverhaulTripleTime" />
+      <PropertyRef Name="AbsentHours" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="LastName" />
+      <PropertyRef Name="Notes" />
+    </Key>
+    <Property Name="ImportedTransactionHeaderId" Type="Int32" Nullable="false" />
+    <Property Name="ImportedFilePath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DateImported" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RecordCount" Type="Int32" Nullable="false" />
+    <Property Name="IsExported" Type="Boolean" Nullable="false" />
+    <Property Name="NewFileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ImportedTransactionId" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeReference" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="RegularOvertime" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="RegularDoubleTime" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="RegularTripleTime" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="MealAllowance" Type="Int32" Nullable="false" />
+    <Property Name="EveningPremium" Type="Int32" Nullable="false" />
+    <Property Name="NightPremium" Type="Int32" Nullable="false" />
+    <Property Name="SundayPremium" Type="Int32" Nullable="false" />
+    <Property Name="HolidayRegularHours" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="HolidayDoubleTimeHours" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="HolidayTripleTimeHours" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="ShiftOvertime" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="ShiftDoubleTime" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="OverhaulOvertime" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="OverhaulDoubleTime" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="OverhaulTripleTime" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="AbsentHours" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeFullName" Type="String" MaxLength="121" FixedLength="false" Unicode="false" />
+    <Property Name="Notes" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="AutoCompleteDataSourceView">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="FilePath" />
+      <PropertyRef Name="FileName" />
+      <PropertyRef Name="Source" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="FilePath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Source" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="AllowancesForExportView">
+    <Key>
+      <PropertyRef Name="ImportedTransactionHeaderId" />
+      <PropertyRef Name="ImportedFilePath" />
+      <PropertyRef Name="DateImported" />
+      <PropertyRef Name="RecordCount" />
+      <PropertyRef Name="IsExported" />
+      <PropertyRef Name="NewFileName" />
+      <PropertyRef Name="ImportedTransactionId" />
+      <PropertyRef Name="AllowanceConfigId" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="AllowanceName" />
+      <PropertyRef Name="PayrollCode" />
+      <PropertyRef Name="RateFactor" />
+      <PropertyRef Name="Quantity" />
+      <PropertyRef Name="TransactionDate" />
+      <PropertyRef Name="EmployeeRef" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="LastName" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Notes" />
+    </Key>
+    <Property Name="ImportedTransactionHeaderId" Type="Int32" Nullable="false" />
+    <Property Name="ImportedFilePath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DateImported" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RecordCount" Type="Int32" Nullable="false" />
+    <Property Name="IsExported" Type="Boolean" Nullable="false" />
+    <Property Name="NewFileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ImportedTransactionId" Type="Int32" Nullable="false" />
+    <Property Name="AllowanceConfigId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="AllowanceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PayrollCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="RateFactor" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EmployeeRef" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeFullName" Type="String" MaxLength="121" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="Notes" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ExportedTransactionsView">
+    <Key>
+      <PropertyRef Name="ExportedTransactionId" />
+      <PropertyRef Name="ExportedPath" />
+      <PropertyRef Name="DateExported" />
+      <PropertyRef Name="EmployeeCount" />
+      <PropertyRef Name="FileName" />
+      <PropertyRef Name="ImportedTransactionId" />
+      <PropertyRef Name="AllowanceConfigId" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="AllowanceName" />
+      <PropertyRef Name="PayrollCode" />
+      <PropertyRef Name="RateFactor" />
+      <PropertyRef Name="Rate" />
+      <PropertyRef Name="Quantity" />
+      <PropertyRef Name="TransactionDate" />
+      <PropertyRef Name="EmployeeRef" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="LastName" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Notes" />
+    </Key>
+    <Property Name="ExportedTransactionId" Type="Int32" Nullable="false" />
+    <Property Name="ExportedPath" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DateExported" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EmployeeCount" Type="Int32" Nullable="false" />
+    <Property Name="IsExported" Type="Boolean" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="ImportedTransactionId" Type="Int32" Nullable="false" />
+    <Property Name="AllowanceConfigId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="AllowanceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PayrollCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="RateFactor" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Rate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EmployeeRef" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeFullName" Type="String" MaxLength="121" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="Notes" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmartAllowanceImportModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AllowanceConfiguration">
+    <Key>
+      <PropertyRef Name="AllowanceConfigId" />
+    </Key>
+    <Property Name="AllowanceConfigId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AllowanceName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ObjectReference" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PayrollCode" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="RateFactor" Type="money" Nullable="false" />
+    <Property Name="IsRateMultiplier" Type="bit" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ExportedTransactionDetails">
+    <Key>
+      <PropertyRef Name="ExportedTransactionDetailId" />
+    </Key>
+    <Property Name="ExportedTransactionDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExportedTransactionId" Type="int" Nullable="false" />
+    <Property Name="ImportedTransactionId" Type="int" Nullable="false" />
+    <Property Name="AllowanceConfigId" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+    <Property Name="PayrollCode" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="ExportedQuantity" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExportedTransactions">
+    <Key>
+      <PropertyRef Name="ExportedTransactionId" />
+    </Key>
+    <Property Name="ExportedTransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="ExportedPath" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="EmployeeCount" Type="int" Nullable="false" />
+    <Property Name="DateExported" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ImportedTransaction">
+    <Key>
+      <PropertyRef Name="ImportedTransactionId" />
+    </Key>
+    <Property Name="ImportedTransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImportedTransactionHeaderId" Type="int" Nullable="false" />
+    <Property Name="EmployeeReference" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="RegularOvertime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="RegularDoubleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="RegularTripleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="MealAllowance" Type="int" Nullable="false" />
+    <Property Name="EveningPremium" Type="int" Nullable="false" />
+    <Property Name="NightPremium" Type="int" Nullable="false" />
+    <Property Name="SundayPremium" Type="int" Nullable="false" />
+    <Property Name="HolidayRegularHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="HolidayDoubleTimeHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="HolidayTripleTimeHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="ShiftOvertime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="ShiftDoubleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulOvertime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulDoubleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulTripleTime" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="AbsentHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ImportedTransactionAllowance">
+    <Key>
+      <PropertyRef Name="ImportedTransactionAllowanceId" />
+    </Key>
+    <Property Name="ImportedTransactionAllowanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImportedTransactionId" Type="int" Nullable="false" />
+    <Property Name="AllowanceConfigId" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ImportedTransactionHeader">
+    <Key>
+      <PropertyRef Name="ImportedTransactionHeaderId" />
+    </Key>
+    <Property Name="ImportedTransactionHeaderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImportedFilePath" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="DateImported" Type="datetime" Nullable="false" />
+    <Property Name="RecordCount" Type="int" Nullable="false" />
+    <Property Name="IsExported" Type="bit" Nullable="false" />
+    <Property Name="NewFileName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartAllowanceImport.dbo.AllowancesForExportView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AllowancesForExportView">
+    <Key>
+      <PropertyRef Name="ImportedTransactionHeaderId" />
+      <PropertyRef Name="ImportedFilePath" />
+      <PropertyRef Name="DateImported" />
+      <PropertyRef Name="RecordCount" />
+      <PropertyRef Name="IsExported" />
+      <PropertyRef Name="NewFileName" />
+      <PropertyRef Name="ImportedTransactionId" />
+      <PropertyRef Name="AllowanceConfigId" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="AllowanceName" />
+      <PropertyRef Name="PayrollCode" />
+      <PropertyRef Name="RateFactor" />
+      <PropertyRef Name="Quantity" />
+      <PropertyRef Name="TransactionDate" />
+      <PropertyRef Name="EmployeeRef" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="LastName" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Notes" />
+    </Key>
+    <Property Name="ImportedTransactionHeaderId" Type="int" Nullable="false" />
+    <Property Name="ImportedFilePath" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="DateImported" Type="datetime" Nullable="false" />
+    <Property Name="RecordCount" Type="int" Nullable="false" />
+    <Property Name="IsExported" Type="bit" Nullable="false" />
+    <Property Name="NewFileName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ImportedTransactionId" Type="int" Nullable="false" />
+    <Property Name="AllowanceConfigId" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="AllowanceName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PayrollCode" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="RateFactor" Type="money" Nullable="false" />
+    <Property Name="Rate" Type="money" />
+    <Property Name="Quantity" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeRef" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="EmployeeFullName" Type="varchar" MaxLength="121" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartAllowanceImport.dbo.AutoCompleteDataSourceView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AutoCompleteDataSourceView">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="FilePath" />
+      <PropertyRef Name="FileName" />
+      <PropertyRef Name="Source" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="FilePath" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="FileName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Source" Type="varchar" MaxLength="6" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartAllowanceImport.dbo.ExportedTransactionsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ExportedTransactionsView">
+    <Key>
+      <PropertyRef Name="ExportedTransactionId" />
+      <PropertyRef Name="ExportedPath" />
+      <PropertyRef Name="DateExported" />
+      <PropertyRef Name="EmployeeCount" />
+      <PropertyRef Name="FileName" />
+      <PropertyRef Name="ImportedTransactionId" />
+      <PropertyRef Name="AllowanceConfigId" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="AllowanceName" />
+      <PropertyRef Name="PayrollCode" />
+      <PropertyRef Name="RateFactor" />
+      <PropertyRef Name="Rate" />
+      <PropertyRef Name="Quantity" />
+      <PropertyRef Name="TransactionDate" />
+      <PropertyRef Name="EmployeeRef" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="LastName" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="Notes" />
+    </Key>
+    <Property Name="ExportedTransactionId" Type="int" Nullable="false" />
+    <Property Name="ExportedPath" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="DateExported" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeCount" Type="int" Nullable="false" />
+    <Property Name="IsExported" Type="bit" />
+    <Property Name="FileName" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="ImportedTransactionId" Type="int" Nullable="false" />
+    <Property Name="AllowanceConfigId" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+    <Property Name="AllowanceName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PayrollCode" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="RateFactor" Type="money" Nullable="false" />
+    <Property Name="Rate" Type="money" Nullable="false" />
+    <Property Name="Quantity" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeRef" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="EmployeeFullName" Type="varchar" MaxLength="121" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartAllowanceImport.dbo.ImportedTransactionsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ImportedTransactionsView">
+    <Key>
+      <PropertyRef Name="ImportedTransactionHeaderId" />
+      <PropertyRef Name="ImportedFilePath" />
+      <PropertyRef Name="DateImported" />
+      <PropertyRef Name="RecordCount" />
+      <PropertyRef Name="IsExported" />
+      <PropertyRef Name="NewFileName" />
+      <PropertyRef Name="ImportedTransactionId" />
+      <PropertyRef Name="EmployeeReference" />
+      <PropertyRef Name="RegularOvertime" />
+      <PropertyRef Name="RegularDoubleTime" />
+      <PropertyRef Name="RegularTripleTime" />
+      <PropertyRef Name="MealAllowance" />
+      <PropertyRef Name="EveningPremium" />
+      <PropertyRef Name="NightPremium" />
+      <PropertyRef Name="SundayPremium" />
+      <PropertyRef Name="HolidayRegularHours" />
+      <PropertyRef Name="HolidayDoubleTimeHours" />
+      <PropertyRef Name="HolidayTripleTimeHours" />
+      <PropertyRef Name="ShiftOvertime" />
+      <PropertyRef Name="ShiftDoubleTime" />
+      <PropertyRef Name="OverhaulOvertime" />
+      <PropertyRef Name="OverhaulDoubleTime" />
+      <PropertyRef Name="OverhaulTripleTime" />
+      <PropertyRef Name="AbsentHours" />
+      <PropertyRef Name="EmployeeId" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="LastName" />
+      <PropertyRef Name="Notes" />
+    </Key>
+    <Property Name="ImportedTransactionHeaderId" Type="int" Nullable="false" />
+    <Property Name="ImportedFilePath" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="DateImported" Type="datetime" Nullable="false" />
+    <Property Name="RecordCount" Type="int" Nullable="false" />
+    <Property Name="IsExported" Type="bit" Nullable="false" />
+    <Property Name="NewFileName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ImportedTransactionId" Type="int" Nullable="false" />
+    <Property Name="EmployeeReference" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="RegularOvertime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="RegularDoubleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="RegularTripleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="MealAllowance" Type="int" Nullable="false" />
+    <Property Name="EveningPremium" Type="int" Nullable="false" />
+    <Property Name="NightPremium" Type="int" Nullable="false" />
+    <Property Name="SundayPremium" Type="int" Nullable="false" />
+    <Property Name="HolidayRegularHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="HolidayDoubleTimeHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="HolidayTripleTimeHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="ShiftOvertime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="ShiftDoubleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulOvertime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulDoubleTime" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="OverhaulTripleTime" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="AbsentHours" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="EmployeeFullName" Type="varchar" MaxLength="121" />
+    <Property Name="Notes" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SmartAllowanceImport.dbo.PayrollCodeView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PayrollCodeView">
+    <Key>
+      <PropertyRef Name="PayrollCodeId" />
+      <PropertyRef Name="CompanyId" />
+      <PropertyRef Name="CategoryId" />
+      <PropertyRef Name="Code" />
+      <PropertyRef Name="Description" />
+      <PropertyRef Name="ShortDescription" />
+      <PropertyRef Name="PrivateToCompany" />
+      <PropertyRef Name="DeductNisBeforeCalculatingPen" />
+      <PropertyRef Name="GovernmentApproved" />
+      <PropertyRef Name="OvertimeCode" />
+      <PropertyRef Name="EmployeeGL" />
+      <PropertyRef Name="UseFormattingConventionForEmployeeGL" />
+      <PropertyRef Name="EmployerGL" />
+      <PropertyRef Name="UseFormattingConventionForEmployerGL" />
+      <PropertyRef Name="VolGL" />
+      <PropertyRef Name="UseFormattingConventionForVolGL" />
+      <PropertyRef Name="EmployeeDefault" />
+      <PropertyRef Name="EmployerDefault" />
+      <PropertyRef Name="VoluntaryDefault" />
+      <PropertyRef Name="SystemCode" />
+      <PropertyRef Name="Active" />
+      <PropertyRef Name="VisualSmartCode" />
+      <PropertyRef Name="BeneficiaryId" />
+      <PropertyRef Name="Priority" />
+      <PropertyRef Name="DisallowVoluntaryDeduction" />
+      <PropertyRef Name="Reference" />
+      <PropertyRef Name="RetroCode" />
+      <PropertyRef Name="ArrearsCode" />
+    </Key>
+    <Property Name="PayrollCodeId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="smallint" Nullable="false" />
+    <Property Name="CategoryId" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="Code" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShortDescription" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="PrivateToCompany" Type="bit" Nullable="false" />
+    <Property Name="DeductNisBeforeCalculatingPen" Type="bit" Nullable="false" />
+    <Property Name="GovernmentApproved" Type="bit" Nullable="false" />
+    <Property Name="OvertimeCode" Type="bit" Nullable="false" />
+    <Property Name="EmployeeGL" Type="char" MaxLength="100" Nullable="false" />
+    <Property Name="UseFormattingConventionForEmployeeGL" Type="bit" Nullable="false" />
+    <Property Name="EmployerGL" Type="char" MaxLength="100" Nullable="false" />
+    <Property Name="UseFormattingConventionForEmployerGL" Type="bit" Nullable="false" />
+    <Property Name="VolGL" Type="char" MaxLength="100" Nullable="false" />
+    <Property Name="UseFormattingConventionForVolGL" Type="bit" Nullable="false" />
+    <Property Name="EmployeeDefault" Type="real" Nullable="false" />
+    <Property Name="EmployerDefault" Type="real" Nullable="false" />
+    <Property Name="VoluntaryDefault" Type="real" Nullable="false" />
+    <Property Name="SystemCode" Type="bit" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="VisualSmartCode" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="smallint" Nullable="false" />
+    <Property Name="Priority" Type="tinyint" Nullable="false" />
+    <Property Name="DisallowVoluntaryDeduction" Type="bit" Nullable="false" />
+    <Property Name="Reference" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="RetroCode" Type="bit" Nullable="false" />
+    <Property Name="ArrearsCode" Type="bit" Nullable="false" />
+    <Property Name="PayrollCode" Type="varchar" MaxLength="9" />
+  </EntityType>
+  <Association Name="FK_ExportedTransactionDetails_ExportedTransactions">
+    <End Role="ExportedTransactions" Type="Self.ExportedTransactions" Multiplicity="1" />
+    <End Role="ExportedTransactionDetails" Type="Self.ExportedTransactionDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExportedTransactions">
+        <PropertyRef Name="ExportedTransactionId" />
+      </Principal>
+      <Dependent Role="ExportedTransactionDetails">
+        <PropertyRef Name="ExportedTransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExportedTransactionDetails_ImportedTransaction">
+    <End Role="ImportedTransaction" Type="Self.ImportedTransaction" Multiplicity="1" />
+    <End Role="ExportedTransactionDetails" Type="Self.ExportedTransactionDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImportedTransaction">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Principal>
+      <Dependent Role="ExportedTransactionDetails">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportedTransaction_ImportedTransactionHeader">
+    <End Role="ImportedTransactionHeader" Type="Self.ImportedTransactionHeader" Multiplicity="1" />
+    <End Role="ImportedTransaction" Type="Self.ImportedTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImportedTransactionHeader">
+        <PropertyRef Name="ImportedTransactionHeaderId" />
+      </Principal>
+      <Dependent Role="ImportedTransaction">
+        <PropertyRef Name="ImportedTransactionHeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportedTransactionAllowance_AllowanceConfiguration">
+    <End Role="AllowanceConfiguration" Type="Self.AllowanceConfiguration" Multiplicity="1" />
+    <End Role="ImportedTransactionAllowance" Type="Self.ImportedTransactionAllowance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AllowanceConfiguration">
+        <PropertyRef Name="AllowanceConfigId" />
+      </Principal>
+      <Dependent Role="ImportedTransactionAllowance">
+        <PropertyRef Name="AllowanceConfigId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportedTransactionAllowance_ImportedTransaction">
+    <End Role="ImportedTransaction" Type="Self.ImportedTransaction" Multiplicity="1" />
+    <End Role="ImportedTransactionAllowance" Type="Self.ImportedTransactionAllowance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImportedTransaction">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Principal>
+      <Dependent Role="ImportedTransactionAllowance">
+        <PropertyRef Name="ImportedTransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmartAllowanceImportModelStoreContainer">
+    <EntitySet Name="AllowanceConfiguration" EntityType="Self.AllowanceConfiguration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExportedTransactionDetails" EntityType="Self.ExportedTransactionDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExportedTransactions" EntityType="Self.ExportedTransactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImportedTransaction" EntityType="Self.ImportedTransaction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImportedTransactionAllowance" EntityType="Self.ImportedTransactionAllowance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImportedTransactionHeader" EntityType="Self.ImportedTransactionHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AllowancesForExportView" EntityType="Self.AllowancesForExportView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AllowancesForExportView].[ImportedTransactionHeaderId] AS [ImportedTransactionHeaderId], 
+    [AllowancesForExportView].[ImportedFilePath] AS [ImportedFilePath], 
+    [AllowancesForExportView].[DateImported] AS [DateImported], 
+    [AllowancesForExportView].[RecordCount] AS [RecordCount], 
+    [AllowancesForExportView].[IsExported] AS [IsExported], 
+    [AllowancesForExportView].[NewFileName] AS [NewFileName], 
+    [AllowancesForExportView].[ImportedTransactionId] AS [ImportedTransactionId], 
+    [AllowancesForExportView].[AllowanceConfigId] AS [AllowanceConfigId], 
+    [AllowancesForExportView].[Amount] AS [Amount], 
+    [AllowancesForExportView].[AllowanceName] AS [AllowanceName], 
+    [AllowancesForExportView].[PayrollCode] AS [PayrollCode], 
+    [AllowancesForExportView].[RateFactor] AS [RateFactor], 
+    [AllowancesForExportView].[Rate] AS [Rate], 
+    [AllowancesForExportView].[Quantity] AS [Quantity], 
+    [AllowancesForExportView].[TransactionDate] AS [TransactionDate], 
+    [AllowancesForExportView].[EmployeeRef] AS [EmployeeRef], 
+    [AllowancesForExportView].[FirstName] AS [FirstName], 
+    [AllowancesForExportView].[LastName] AS [LastName], 
+    [AllowancesForExportView].[EmployeeFullName] AS [EmployeeFullName], 
+    [AllowancesForExportView].[EmployeeId] AS [EmployeeId], 
+    [AllowancesForExportView].[Notes] AS [Notes]
+    FROM [dbo].[AllowancesForExportView] AS [AllowancesForExportView]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="AutoCompleteDataSourceView" EntityType="Self.AutoCompleteDataSourceView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AutoCompleteDataSourceView].[Id] AS [Id], 
+    [AutoCompleteDataSourceView].[FilePath] AS [FilePath], 
+    [AutoCompleteDataSourceView].[FileName] AS [FileName], 
+    [AutoCompleteDataSourceView].[Source] AS [Source]
+    FROM [dbo].[AutoCompleteDataSourceView] AS [AutoCompleteDataSourceView]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ExportedTransactionsView" EntityType="Self.ExportedTransactionsView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ExportedTransactionsView].[ExportedTransactionId] AS [ExportedTransactionId], 
+    [ExportedTransactionsView].[ExportedPath] AS [ExportedPath], 
+    [ExportedTransactionsView].[DateExported] AS [DateExported], 
+    [ExportedTransactionsView].[EmployeeCount] AS [EmployeeCount], 
+    [ExportedTransactionsView].[IsExported] AS [IsExported], 
+    [ExportedTransactionsView].[FileName] AS [FileName], 
+    [ExportedTransactionsView].[ImportedTransactionId] AS [ImportedTransactionId], 
+    [ExportedTransactionsView].[AllowanceConfigId] AS [AllowanceConfigId], 
+    [ExportedTransactionsView].[Amount] AS [Amount], 
+    [ExportedTransactionsView].[AllowanceName] AS [AllowanceName], 
+    [ExportedTransactionsView].[PayrollCode] AS [PayrollCode], 
+    [ExportedTransactionsView].[RateFactor] AS [RateFactor], 
+    [ExportedTransactionsView].[Rate] AS [Rate], 
+    [ExportedTransactionsView].[Quantity] AS [Quantity], 
+    [ExportedTransactionsView].[TransactionDate] AS [TransactionDate], 
+    [ExportedTransactionsView].[EmployeeRef] AS [EmployeeRef], 
+    [ExportedTransactionsView].[FirstName] AS [FirstName], 
+    [ExportedTransactionsView].[LastName] AS [LastName], 
+    [ExportedTransactionsView].[EmployeeFullName] AS [EmployeeFullName], 
+    [ExportedTransactionsView].[EmployeeId] AS [EmployeeId], 
+    [ExportedTransactionsView].[Notes] AS [Notes]
+    FROM [dbo].[ExportedTransactionsView] AS [ExportedTransactionsView]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ImportedTransactionsView" EntityType="Self.ImportedTransactionsView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ImportedTransactionsView].[ImportedTransactionHeaderId] AS [ImportedTransactionHeaderId], 
+    [ImportedTransactionsView].[ImportedFilePath] AS [ImportedFilePath], 
+    [ImportedTransactionsView].[DateImported] AS [DateImported], 
+    [ImportedTransactionsView].[RecordCount] AS [RecordCount], 
+    [ImportedTransactionsView].[IsExported] AS [IsExported], 
+    [ImportedTransactionsView].[NewFileName] AS [NewFileName], 
+    [ImportedTransactionsView].[ImportedTransactionId] AS [ImportedTransactionId], 
+    [ImportedTransactionsView].[EmployeeReference] AS [EmployeeReference], 
+    [ImportedTransactionsView].[RegularOvertime] AS [RegularOvertime], 
+    [ImportedTransactionsView].[RegularDoubleTime] AS [RegularDoubleTime], 
+    [ImportedTransactionsView].[RegularTripleTime] AS [RegularTripleTime], 
+    [ImportedTransactionsView].[MealAllowance] AS [MealAllowance], 
+    [ImportedTransactionsView].[EveningPremium] AS [EveningPremium], 
+    [ImportedTransactionsView].[NightPremium] AS [NightPremium], 
+    [ImportedTransactionsView].[SundayPremium] AS [SundayPremium], 
+    [ImportedTransactionsView].[HolidayRegularHours] AS [HolidayRegularHours], 
+    [ImportedTransactionsView].[HolidayDoubleTimeHours] AS [HolidayDoubleTimeHours], 
+    [ImportedTransactionsView].[HolidayTripleTimeHours] AS [HolidayTripleTimeHours], 
+    [ImportedTransactionsView].[ShiftOvertime] AS [ShiftOvertime], 
+    [ImportedTransactionsView].[ShiftDoubleTime] AS [ShiftDoubleTime], 
+    [ImportedTransactionsView].[OverhaulOvertime] AS [OverhaulOvertime], 
+    [ImportedTransactionsView].[OverhaulDoubleTime] AS [OverhaulDoubleTime], 
+    [ImportedTransactionsView].[OverhaulTripleTime] AS [OverhaulTripleTime], 
+    [ImportedTransactionsView].[AbsentHours] AS [AbsentHours], 
+    [ImportedTransactionsView].[EmployeeId] AS [EmployeeId], 
+    [ImportedTransactionsView].[FirstName] AS [FirstName], 
+    [ImportedTransactionsView].[LastName] AS [LastName], 
+    [ImportedTransactionsView].[EmployeeFullName] AS [EmployeeFullName], 
+    [ImportedTransactionsView].[Notes] AS [Notes]
+    FROM [dbo].[ImportedTransactionsView] AS [ImportedTransactionsView]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PayrollCodeView" EntityType="Self.PayrollCodeView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PayrollCodeView].[PayrollCodeId] AS [PayrollCodeId], 
+    [PayrollCodeView].[CompanyId] AS [CompanyId], 
+    [PayrollCodeView].[CategoryId] AS [CategoryId], 
+    [PayrollCodeView].[Code] AS [Code], 
+    [PayrollCodeView].[Description] AS [Description], 
+    [PayrollCodeView].[ShortDescription] AS [ShortDescription], 
+    [PayrollCodeView].[PrivateToCompany] AS [PrivateToCompany], 
+    [PayrollCodeView].[DeductNisBeforeCalculatingPen] AS [DeductNisBeforeCalculatingPen], 
+    [PayrollCodeView].[GovernmentApproved] AS [GovernmentApproved], 
+    [PayrollCodeView].[OvertimeCode] AS [OvertimeCode], 
+    [PayrollCodeView].[EmployeeGL] AS [EmployeeGL], 
+    [PayrollCodeView].[UseFormattingConventionForEmployeeGL] AS [UseFormattingConventionForEmployeeGL], 
+    [PayrollCodeView].[EmployerGL] AS [EmployerGL], 
+    [PayrollCodeView].[UseFormattingConventionForEmployerGL] AS [UseFormattingConventionForEmployerGL], 
+    [PayrollCodeView].[VolGL] AS [VolGL], 
+    [PayrollCodeView].[UseFormattingConventionForVolGL] AS [UseFormattingConventionForVolGL], 
+    [PayrollCodeView].[EmployeeDefault] AS [EmployeeDefault], 
+    [PayrollCodeView].[EmployerDefault] AS [EmployerDefault], 
+    [PayrollCodeView].[VoluntaryDefault] AS [VoluntaryDefault], 
+    [PayrollCodeView].[SystemCode] AS [SystemCode], 
+    [PayrollCodeView].[Active] AS [Active], 
+    [PayrollCodeView].[VisualSmartCode] AS [VisualSmartCode], 
+    [PayrollCodeView].[BeneficiaryId] AS [BeneficiaryId], 
+    [PayrollCodeView].[Priority] AS [Priority], 
+    [PayrollCodeView].[DisallowVoluntaryDeduction] AS [DisallowVoluntaryDeduction], 
+    [PayrollCodeView].[Reference] AS [Reference], 
+    [PayrollCodeView].[RetroCode] AS [RetroCode], 
+    [PayrollCodeView].[ArrearsCode] AS [ArrearsCode], 
+    [PayrollCodeView].[PayrollCode] AS [PayrollCode]
+    FROM [dbo].[PayrollCodeView] AS [PayrollCodeView]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_ExportedTransactionDetails_ExportedTransactions" Association="Self.FK_ExportedTransactionDetails_ExportedTransactions">
+      <End Role="ExportedTransactions" EntitySet="ExportedTransactions" />
+      <End Role="ExportedTransactionDetails" EntitySet="ExportedTransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportedTransactionDetails_ImportedTransaction" Association="Self.FK_ExportedTransactionDetails_ImportedTransaction">
+      <End Role="ImportedTransaction" EntitySet="ImportedTransaction" />
+      <End Role="ExportedTransactionDetails" EntitySet="ExportedTransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportedTransaction_ImportedTransactionHeader" Association="Self.FK_ImportedTransaction_ImportedTransactionHeader">
+      <End Role="ImportedTransactionHeader" EntitySet="ImportedTransactionHeader" />
+      <End Role="ImportedTransaction" EntitySet="ImportedTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportedTransactionAllowance_AllowanceConfiguration" Association="Self.FK_ImportedTransactionAllowance_AllowanceConfiguration">
+      <End Role="AllowanceConfiguration" EntitySet="AllowanceConfiguration" />
+      <End Role="ImportedTransactionAllowance" EntitySet="ImportedTransactionAllowance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportedTransactionAllowance_ImportedTransaction" Association="Self.FK_ImportedTransactionAllowance_ImportedTransaction">
+      <End Role="ImportedTransaction" EntitySet="ImportedTransaction" />
+      <End Role="ImportedTransactionAllowance" EntitySet="ImportedTransactionAllowance" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

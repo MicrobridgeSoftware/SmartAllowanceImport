@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SmartAllowanceImportModelStoreContainer" CdmEntityContainer="SmartAllowanceImportEntities">
+    <EntitySetMapping Name="ImportedTransactions">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.ImportedTransaction">
+        <MappingFragment StoreEntitySet="ImportedTransaction">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="ImportedTransactionId" ColumnName="ImportedTransactionId" />
+          <ScalarProperty Name="ImportedTransactionHeaderId" ColumnName="ImportedTransactionHeaderId" />
+          <ScalarProperty Name="EmployeeReference" ColumnName="EmployeeReference" />
+          <ScalarProperty Name="RegularOvertime" ColumnName="RegularOvertime" />
+          <ScalarProperty Name="RegularDoubleTime" ColumnName="RegularDoubleTime" />
+          <ScalarProperty Name="RegularTripleTime" ColumnName="RegularTripleTime" />
+          <ScalarProperty Name="MealAllowance" ColumnName="MealAllowance" />
+          <ScalarProperty Name="EveningPremium" ColumnName="EveningPremium" />
+          <ScalarProperty Name="NightPremium" ColumnName="NightPremium" />
+          <ScalarProperty Name="SundayPremium" ColumnName="SundayPremium" />
+          <ScalarProperty Name="HolidayRegularHours" ColumnName="HolidayRegularHours" />
+          <ScalarProperty Name="HolidayDoubleTimeHours" ColumnName="HolidayDoubleTimeHours" />
+          <ScalarProperty Name="HolidayTripleTimeHours" ColumnName="HolidayTripleTimeHours" />
+          <ScalarProperty Name="ShiftOvertime" ColumnName="ShiftOvertime" />
+          <ScalarProperty Name="ShiftDoubleTime" ColumnName="ShiftDoubleTime" />
+          <ScalarProperty Name="OverhaulOvertime" ColumnName="OverhaulOvertime" />
+          <ScalarProperty Name="OverhaulDoubleTime" ColumnName="OverhaulDoubleTime" />
+          <ScalarProperty Name="OverhaulTripleTime" ColumnName="OverhaulTripleTime" />
+          <ScalarProperty Name="AbsentHours" ColumnName="AbsentHours" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImportedTransactionHeaders">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.ImportedTransactionHeader">
+        <MappingFragment StoreEntitySet="ImportedTransactionHeader">
+          <ScalarProperty Name="ImportedTransactionHeaderId" ColumnName="ImportedTransactionHeaderId" />
+          <ScalarProperty Name="ImportedFilePath" ColumnName="ImportedFilePath" />
+          <ScalarProperty Name="DateImported" ColumnName="DateImported" />
+          <ScalarProperty Name="RecordCount" ColumnName="RecordCount" />
+          <ScalarProperty Name="IsExported" ColumnName="IsExported" />
+          <ScalarProperty Name="NewFileName" ColumnName="NewFileName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AllowanceConfigurations">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.AllowanceConfiguration">
+        <MappingFragment StoreEntitySet="AllowanceConfiguration">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="IsRateMultiplier" ColumnName="IsRateMultiplier" />
+          <ScalarProperty Name="RateFactor" ColumnName="RateFactor" />
+          <ScalarProperty Name="PayrollCode" ColumnName="PayrollCode" />
+          <ScalarProperty Name="ObjectReference" ColumnName="ObjectReference" />
+          <ScalarProperty Name="AllowanceName" ColumnName="AllowanceName" />
+          <ScalarProperty Name="AllowanceConfigId" ColumnName="AllowanceConfigId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImportedTransactionAllowances">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.ImportedTransactionAllowance">
+        <MappingFragment StoreEntitySet="ImportedTransactionAllowance">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="AllowanceConfigId" ColumnName="AllowanceConfigId" />
+          <ScalarProperty Name="ImportedTransactionId" ColumnName="ImportedTransactionId" />
+          <ScalarProperty Name="ImportedTransactionAllowanceId" ColumnName="ImportedTransactionAllowanceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayrollCodeViews">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.PayrollCodeView">
+        <MappingFragment StoreEntitySet="PayrollCodeView">
+          <ScalarProperty Name="PayrollCode" ColumnName="PayrollCode" />
+          <ScalarProperty Name="ArrearsCode" ColumnName="ArrearsCode" />
+          <ScalarProperty Name="RetroCode" ColumnName="RetroCode" />
+          <ScalarProperty Name="Reference" ColumnName="Reference" />
+          <ScalarProperty Name="DisallowVoluntaryDeduction" ColumnName="DisallowVoluntaryDeduction" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="VisualSmartCode" ColumnName="VisualSmartCode" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="SystemCode" ColumnName="SystemCode" />
+          <ScalarProperty Name="VoluntaryDefault" ColumnName="VoluntaryDefault" />
+          <ScalarProperty Name="EmployerDefault" ColumnName="EmployerDefault" />
+          <ScalarProperty Name="EmployeeDefault" ColumnName="EmployeeDefault" />
+          <ScalarProperty Name="UseFormattingConventionForVolGL" ColumnName="UseFormattingConventionForVolGL" />
+          <ScalarProperty Name="VolGL" ColumnName="VolGL" />
+          <ScalarProperty Name="UseFormattingConventionForEmployerGL" ColumnName="UseFormattingConventionForEmployerGL" />
+          <ScalarProperty Name="EmployerGL" ColumnName="EmployerGL" />
+          <ScalarProperty Name="UseFormattingConventionForEmployeeGL" ColumnName="UseFormattingConventionForEmployeeGL" />
+          <ScalarProperty Name="EmployeeGL" ColumnName="EmployeeGL" />
+          <ScalarProperty Name="OvertimeCode" ColumnName="OvertimeCode" />
+          <ScalarProperty Name="GovernmentApproved" ColumnName="GovernmentApproved" />
+          <ScalarProperty Name="DeductNisBeforeCalculatingPen" ColumnName="DeductNisBeforeCalculatingPen" />
+          <ScalarProperty Name="PrivateToCompany" ColumnName="PrivateToCompany" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="PayrollCodeId" ColumnName="PayrollCodeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExportedTransactionDetails">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.ExportedTransactionDetail">
+        <MappingFragment StoreEntitySet="ExportedTransactionDetails">
+          <ScalarProperty Name="ExportedQuantity" ColumnName="ExportedQuantity" />
+          <ScalarProperty Name="PayrollCode" ColumnName="PayrollCode" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="AllowanceConfigId" ColumnName="AllowanceConfigId" />
+          <ScalarProperty Name="ImportedTransactionId" ColumnName="ImportedTransactionId" />
+          <ScalarProperty Name="ExportedTransactionId" ColumnName="ExportedTransactionId" />
+          <ScalarProperty Name="ExportedTransactionDetailId" ColumnName="ExportedTransactionDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExportedTransactions">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.ExportedTransaction">
+        <MappingFragment StoreEntitySet="ExportedTransactions">
+          <ScalarProperty Name="DateExported" ColumnName="DateExported" />
+          <ScalarProperty Name="EmployeeCount" ColumnName="EmployeeCount" />
+          <ScalarProperty Name="ExportedPath" ColumnName="ExportedPath" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="ExportedTransactionId" ColumnName="ExportedTransactionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImportedTransactionsViews">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.ImportedTransactionsView">
+        <MappingFragment StoreEntitySet="ImportedTransactionsView">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="EmployeeFullName" ColumnName="EmployeeFullName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="AbsentHours" ColumnName="AbsentHours" />
+          <ScalarProperty Name="OverhaulTripleTime" ColumnName="OverhaulTripleTime" />
+          <ScalarProperty Name="OverhaulDoubleTime" ColumnName="OverhaulDoubleTime" />
+          <ScalarProperty Name="OverhaulOvertime" ColumnName="OverhaulOvertime" />
+          <ScalarProperty Name="ShiftDoubleTime" ColumnName="ShiftDoubleTime" />
+          <ScalarProperty Name="ShiftOvertime" ColumnName="ShiftOvertime" />
+          <ScalarProperty Name="HolidayTripleTimeHours" ColumnName="HolidayTripleTimeHours" />
+          <ScalarProperty Name="HolidayDoubleTimeHours" ColumnName="HolidayDoubleTimeHours" />
+          <ScalarProperty Name="HolidayRegularHours" ColumnName="HolidayRegularHours" />
+          <ScalarProperty Name="SundayPremium" ColumnName="SundayPremium" />
+          <ScalarProperty Name="NightPremium" ColumnName="NightPremium" />
+          <ScalarProperty Name="EveningPremium" ColumnName="EveningPremium" />
+          <ScalarProperty Name="MealAllowance" ColumnName="MealAllowance" />
+          <ScalarProperty Name="RegularTripleTime" ColumnName="RegularTripleTime" />
+          <ScalarProperty Name="RegularDoubleTime" ColumnName="RegularDoubleTime" />
+          <ScalarProperty Name="RegularOvertime" ColumnName="RegularOvertime" />
+          <ScalarProperty Name="EmployeeReference" ColumnName="EmployeeReference" />
+          <ScalarProperty Name="ImportedTransactionId" ColumnName="ImportedTransactionId" />
+          <ScalarProperty Name="NewFileName" ColumnName="NewFileName" />
+          <ScalarProperty Name="IsExported" ColumnName="IsExported" />
+          <ScalarProperty Name="RecordCount" ColumnName="RecordCount" />
+          <ScalarProperty Name="DateImported" ColumnName="DateImported" />
+          <ScalarProperty Name="ImportedFilePath" ColumnName="ImportedFilePath" />
+          <ScalarProperty Name="ImportedTransactionHeaderId" ColumnName="ImportedTransactionHeaderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AutoCompleteDataSourceViews">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.AutoCompleteDataSourceView">
+        <MappingFragment StoreEntitySet="AutoCompleteDataSourceView">
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AllowancesForExportViews">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.AllowancesForExportView">
+        <MappingFragment StoreEntitySet="AllowancesForExportView">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="EmployeeFullName" ColumnName="EmployeeFullName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="EmployeeRef" ColumnName="EmployeeRef" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="RateFactor" ColumnName="RateFactor" />
+          <ScalarProperty Name="PayrollCode" ColumnName="PayrollCode" />
+          <ScalarProperty Name="AllowanceName" ColumnName="AllowanceName" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="AllowanceConfigId" ColumnName="AllowanceConfigId" />
+          <ScalarProperty Name="ImportedTransactionId" ColumnName="ImportedTransactionId" />
+          <ScalarProperty Name="NewFileName" ColumnName="NewFileName" />
+          <ScalarProperty Name="IsExported" ColumnName="IsExported" />
+          <ScalarProperty Name="RecordCount" ColumnName="RecordCount" />
+          <ScalarProperty Name="DateImported" ColumnName="DateImported" />
+          <ScalarProperty Name="ImportedFilePath" ColumnName="ImportedFilePath" />
+          <ScalarProperty Name="ImportedTransactionHeaderId" ColumnName="ImportedTransactionHeaderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExportedTransactionsViews">
+      <EntityTypeMapping TypeName="SmartAllowanceImportModel.ExportedTransactionsView">
+        <MappingFragment StoreEntitySet="ExportedTransactionsView">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="EmployeeFullName" ColumnName="EmployeeFullName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="EmployeeRef" ColumnName="EmployeeRef" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="RateFactor" ColumnName="RateFactor" />
+          <ScalarProperty Name="PayrollCode" ColumnName="PayrollCode" />
+          <ScalarProperty Name="AllowanceName" ColumnName="AllowanceName" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="AllowanceConfigId" ColumnName="AllowanceConfigId" />
+          <ScalarProperty Name="ImportedTransactionId" ColumnName="ImportedTransactionId" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="IsExported" ColumnName="IsExported" />
+          <ScalarProperty Name="EmployeeCount" ColumnName="EmployeeCount" />
+          <ScalarProperty Name="DateExported" ColumnName="DateExported" />
+          <ScalarProperty Name="ExportedPath" ColumnName="ExportedPath" />
+          <ScalarProperty Name="ExportedTransactionId" ColumnName="ExportedTransactionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

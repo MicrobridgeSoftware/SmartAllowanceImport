@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{351D2C4E-1393-4A46-B142-2890ED9C13AE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SmartAllowanceImport</RootNamespace>
+    <AssemblyName>SmartAllowanceImport</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>iconfinderimportexport.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.WinControls, Version=2019.1.219.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.WinControls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.GridView, Version=2019.1.219.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.UI, Version=2019.1.219.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.WinControls.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Documents.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Documents.Fixed.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Documents.Flow.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow.FormatProviders.Pdf, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Documents.Flow.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip, Version=2016.2.606.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\Telerik.Windows.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="TelerikCommon, Version=2019.1.219.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\lib\RCWF\2019.1.219.40\TelerikCommon.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TelerikData, Version=2016.2.608.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\TelerikData.dll</HintPath>
+    </Reference>
+    <Reference Include="TelerikExport, Version=2016.2.608.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCWF\2019.1.219.40\TelerikExport.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AllowanceConfiguration.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AllowanceImportModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AllowanceImportModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AllowanceImportModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AllowanceImportModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AllowanceImportModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="AllowancesForExportView.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCompleteDataSourceView.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExportedTransaction.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExportedTransactionDetail.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExportedTransactionsView.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Export\FrmFileExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Export\FrmFileExport.Designer.cs">
+      <DependentUpon>FrmFileExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmWaitDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmWaitDialogue.Designer.cs">
+      <DependentUpon>FrmWaitDialogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportedTransaction.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImportedTransactionAllowance.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImportedTransactionHeader.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImportedTransactionsView.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Import\FrmFileImport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Import\FrmFileImport.Designer.cs">
+      <DependentUpon>FrmFileImport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lookup\FrmExportedTransactionsLookup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lookup\FrmExportedTransactionsLookup.Designer.cs">
+      <DependentUpon>FrmExportedTransactionsLookup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lookup\FrmImportedTransactionsLookup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lookup\FrmImportedTransactionsLookup.Designer.cs">
+      <DependentUpon>FrmImportedTransactionsLookup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Maintenance\FrmAllowanceConfiguration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Maintenance\FrmAllowanceConfiguration.Designer.cs">
+      <DependentUpon>FrmAllowanceConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollCodeView.cs">
+      <DependentUpon>AllowanceImportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RadForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RadForm1.Designer.cs">
+      <DependentUpon>RadForm1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\TransactionImport.cs" />
+    <EmbeddedResource Include="Export\FrmFileExport.resx">
+      <DependentUpon>FrmFileExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmWaitDialogue.resx">
+      <DependentUpon>FrmWaitDialogue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Import\FrmFileImport.resx">
+      <DependentUpon>FrmFileImport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lookup\FrmExportedTransactionsLookup.resx">
+      <DependentUpon>FrmExportedTransactionsLookup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lookup\FrmImportedTransactionsLookup.resx">
+      <DependentUpon>FrmImportedTransactionsLookup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Maintenance\FrmAllowanceConfiguration.resx">
+      <DependentUpon>FrmAllowanceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="RadForm1.resx">
+      <DependentUpon>RadForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EntityDeploy Include="AllowanceImportModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AllowanceImportModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AllowanceImportModel.edmx.diagram">
+      <DependentUpon>AllowanceImportModel.edmx</DependentUpon>
+    </None>
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\AllowanceConfiguration.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--sirinie -->
+    <None Include="Resources\fileImport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_package_system_1442.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FileExport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\microsoft_excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_download.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\overview_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel_2003_01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_save_as.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view_doc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AllowanceImportModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AllowanceImportModel.Context.cs</LastGenOutput>
+      <DependentUpon>AllowanceImportModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="AllowanceImportModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AllowanceImportModel.edmx</DependentUpon>
+      <LastGenOutput>AllowanceImportModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="iconfinderimportexport.ico" />
+    <None Include="Resources\search_folder.png" />
+    <None Include="Resources\if_import-export_63126.png" />
+    <None Include="Resources\edit-clear-32.png" />
+    <None Include="Resources\document_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ShouldAddDPIScalingManifest="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
